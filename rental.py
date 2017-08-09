@@ -2,14 +2,6 @@ from movie import Movie
 
 
 class Rental(object):
-    BASE_PRICE = 1.5
-    CHILD_PRICE = 1.5
-    REGULAR_PRICE = 2
-    NEW_RELEASE_PRICE = 3
-
-    CHILD_MIN_DAYS = 3
-    REGULAR_MIN_DAYS = 2
-
     def __init__(self, movie, days_rented):
         self._movie = movie
         self._days_rented = days_rented
@@ -30,17 +22,8 @@ class Rental(object):
 
     def determine_amount(self):
         if self.movie.price_code == Movie.REGULAR:
-            if self.is_greater_than_min_days(self.REGULAR_MIN_DAYS):
-                return Movie.regular_price(self.days_rented, self.REGULAR_MIN_DAYS)
-            else:
-                return Movie.REGULAR_PRICE
+            return Movie.calculate_reg_price(self.days_rented)
         elif self.movie.price_code == Movie.NEW_RELEASE:
-            return Movie.new_release_price(self.days_rented)
+            return Movie.calculate_new_release_price(self.days_rented)
         elif self.movie.price_code == Movie.CHILDRENS:
-            if self.is_greater_than_min_days(self.CHILD_MIN_DAYS):
-                return Movie.children_price(self.days_rented, self.CHILD_MIN_DAYS)
-            else:
-                return Movie.CHILD_PRICE
-
-    def is_greater_than_min_days(self, min_days):
-        return self.days_rented > min_days
+            return Movie.calculate_children_price(self.days_rented)
