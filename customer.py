@@ -23,7 +23,7 @@ class Customer(object):
         for rental in rentals:
             this_amount = 0
 
-            this_amount = self.determine_amount(rental, this_amount)
+            this_amount = rental.determine_amount(this_amount)
 
             frequent_renter_points = self.determine_renter_points(frequent_renter_points, rental)
 
@@ -42,16 +42,3 @@ class Customer(object):
                     rental.days_rented > 1):
             frequent_renter_points += 1
         return frequent_renter_points
-
-    def determine_amount(self, rental, this_amount):
-        if rental.movie.price_code == Movie.REGULAR:
-            this_amount += 2
-            if rental.days_rented > 2:
-                this_amount += (rental.days_rented - 2) * 1.5
-        elif rental.movie.price_code == Movie.NEW_RELEASE:
-            this_amount += rental.days_rented * 3
-        elif rental.movie.price_code == Movie.CHILDRENS:
-            this_amount += 1.5
-            if rental.days_rented > 3:
-                this_amount += (rental.days_rented - 3) * 1.5
-        return this_amount
