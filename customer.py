@@ -20,7 +20,7 @@ class Customer(object):
         for rental in rentals:
             this_amount = 0
 
-            this_amount = rental.determine_amount(this_amount)
+            this_amount += rental.determine_amount()
 
             frequent_renter_points = rental.determine_renter_points(frequent_renter_points)
 
