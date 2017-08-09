@@ -18,14 +18,12 @@ class Customer(object):
         result = 'Rental Record for ' + self.name + '\n'
 
         for rental in rentals:
-            this_amount = 0
-
-            this_amount += rental.determine_amount()
+            rental_amount = rental.determine_amount()
 
             frequent_renter_points = rental.determine_renter_points(frequent_renter_points)
 
-            result += '\t' + rental.movie.title + '\t' + str(this_amount) + '\n'
-            total_amount += this_amount
+            result += '\t' + rental.movie.title + '\t' + str(rental_amount) + '\n'
+            total_amount += rental_amount
 
         result += 'You owed ' + str(total_amount) + '\n'
         result += 'You earned ' + str(frequent_renter_points) + ' frequent ' \
