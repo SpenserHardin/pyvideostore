@@ -15,6 +15,12 @@ class Rental(object):
     def movie(self):
         return self._movie
 
+    def determine_renter_points(self, frequent_renter_points):
+        frequent_renter_points += 1
+        if self.movie.price_code == Movie.NEW_RELEASE and self.days_rented > 1:
+            frequent_renter_points += 1
+        return frequent_renter_points
+
     def determine_amount(self, this_amount):
         if self.movie.price_code == Movie.REGULAR:
             this_amount += 2

@@ -1,6 +1,3 @@
-from movie import Movie
-
-
 class Customer(object):
 
     def __init__(self, name):
@@ -25,7 +22,7 @@ class Customer(object):
 
             this_amount = rental.determine_amount(this_amount)
 
-            frequent_renter_points = self.determine_renter_points(frequent_renter_points, rental)
+            frequent_renter_points = rental.determine_renter_points(frequent_renter_points)
 
             result += '\t' + rental.movie.title + '\t' + str(this_amount) + '\n'
             total_amount += this_amount
@@ -35,10 +32,3 @@ class Customer(object):
                   'renter points\n'
 
         return result
-
-    def determine_renter_points(self, frequent_renter_points, rental):
-        frequent_renter_points += 1
-        if (rental.movie.price_code == Movie.NEW_RELEASE and
-                    rental.days_rented > 1):
-            frequent_renter_points += 1
-        return frequent_renter_points
