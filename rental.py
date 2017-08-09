@@ -30,25 +30,17 @@ class Rental(object):
 
     def determine_amount(self):
         if self.movie.price_code == Movie.REGULAR:
-            return self.regular_price()
+            if self.is_greater_than_min_days(self.REGULAR_MIN_DAYS):
+                return Movie.regular_price(self.days_rented, self.REGULAR_MIN_DAYS)
+            else:
+                return Movie.REGULAR_PRICE
         elif self.movie.price_code == Movie.NEW_RELEASE:
-            return self.new_release_price()
+            return Movie.new_release_price(self.days_rented)
         elif self.movie.price_code == Movie.CHILDRENS:
-            return self.children_price()
-
-    def new_release_price(self):
-        return self.days_rented * self.NEW_RELEASE_PRICE
-
-    def children_price(self):
-        return self.more_than_min_day_price(self.CHILD_PRICE, self.CHILD_MIN_DAYS) \
-            if self.is_greater_than_min_days(self.CHILD_MIN_DAYS) else self.CHILD_PRICE
-
-    def regular_price(self):
-        return self.more_than_min_day_price(self.REGULAR_PRICE, self.REGULAR_MIN_DAYS) \
-            if self.is_greater_than_min_days(self.REGULAR_MIN_DAYS) else self.REGULAR_PRICE
-
-    def more_than_min_day_price(self, genre_price, min_days):
-        return genre_price + (self.days_rented - min_days) * self.BASE_PRICE
+            if self.is_greater_than_min_days(self.CHILD_MIN_DAYS):
+                return Movie.children_price(self.days_rented, self.CHILD_MIN_DAYS)
+            else:
+                return Movie.CHILD_PRICE
 
     def is_greater_than_min_days(self, min_days):
         return self.days_rented > min_days
